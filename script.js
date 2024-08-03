@@ -294,6 +294,13 @@ function stopTimer() {
     clearInterval(timerObj);
 }
 
+/******************* Initialize Slider Value *******************/
+document.addEventListener("DOMContentLoaded", function () {
+    if (slider) {
+        slider.value = 0;
+    }
+});
+
 /********************** enable drag and drop **********************/
 // Prevent default behavior for dragover and dragleave events
 videoPlayer.addEventListener('dragenter', (e) => {
