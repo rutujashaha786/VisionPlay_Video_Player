@@ -1,6 +1,7 @@
 
 let video = "";
 let isPlaying = false;
+let metadataLoaded = false;
 let currentPlayTime;
 let duration;
 let timerObj;
@@ -12,7 +13,7 @@ const videoBtn = document.querySelector("#videoBtn");
 
 const handleInput = function () {
     videoInput.click();
-    videoInput.value = '';
+    videoInput.value = ''; 
 }
 
 videoBtn.addEventListener("click", handleInput);
@@ -25,27 +26,36 @@ const currentTimeElem = document.querySelector("#currentTime");
 
 const acceptInputHandler = function (eventObj) {
 
-    let selectedFile;
+    let selectedFileObject;
+    metadataLoaded = false;
     if (eventObj.type == "drop") {
-        selectedFile = eventObj.dataTransfer.files[0]
+        selectedFileObject = eventObj.dataTransfer.files[0];
 
     } else {
-        selectedFile = eventObj.target.files[0];
+        selectedFileObject = eventObj.target.files[0];
     }
 
-    if (!selectedFile.type.startsWith('video/')) {
+    if (!selectedFileObject.type.startsWith('video/')) { 
         stopHandler();
         showToast('Invalid file type. Please select a video file.', 5000);
         return;
     }
 
-    const link = URL.createObjectURL(selectedFile);
+     // Supported formats
+     const supportedTypes = ['video/mp4', 'video/webm', 'video/3gpp', 'video/quicktime'];
+     // Check if the selected video format is supported
+    if (!supportedTypes.includes(selectedFileObject.type)) {
+        stopHandler();
+        showToast('Unsupported video format. Please upload another video.', 5000);
+        return;
+    }
+
+    const link = URL.createObjectURL(selectedFileObject);
     const videoElement = document.createElement("video");
     videoElement.src = link;
     videoElement.setAttribute("class", "video");
 
     if (videoPlayer.children.length > 0) {
-        // if present -> remove it 
         videoPlayer.removeChild(videoPlayer.children[0]);
     }
 
@@ -58,17 +68,17 @@ const acceptInputHandler = function (eventObj) {
     slider.value = 0;
 
     videoElement.addEventListener("loadedmetadata", function () {
-        duration = Math.round(videoElement.duration); //get duration in secs (whole number)
-        let time = timeFormat(duration); // convert seconds into hrs:mins:secs
+        metadataLoaded = true;
+        duration = Math.round(videoElement.duration); 
+        let time = timeFormat(duration);
         totalTimeElem.innerText = time;
         currentTimeElem.innerText = "00:00:00";
         slider.setAttribute("max", duration);
         startTimer();
     })
-
 }
 
-videoInput.addEventListener("change", acceptInputHandler);
+videoInput.addEventListener("change", acceptInputHandler); 
 
 /******************* volume and speed *******************/
 const speedUp = document.querySelector("#speedUp");
@@ -149,12 +159,18 @@ const fullscreenHandler = function () {
     if (videoElement == null) {
         return;
     }
-    videoElement.requestFullscreen();
+    if (videoElement.requestFullscreen) {
+        videoElement.requestFullscreen(); 
+    } else if (videoElement.webkitRequestFullscreen) { 
+        videoElement.webkitRequestFullscreen();
+    } else {
+        showToast("Fullscreen is not supported on your browser.");
+    }
 }
 
 fullscreenBtn.addEventListener("click", fullscreenHandler);
 
-slider.addEventListener("change", function (e) {
+slider.addEventListener("input", function (e) {
     const videoElement = document.querySelector("video");
     if (videoElement == null) {
         slider.value = 0;
@@ -163,6 +179,7 @@ slider.addEventListener("change", function (e) {
 
     let value = e.target.value;
     video.currentTime = value;
+    currentTimeElem.innerText = timeFormat(value);
 });
 
 /*********** forward and backward button *************/
@@ -175,7 +192,8 @@ const forward = function () {
         return;
     }
 
-    currentPlayTime = Math.round(video.currentTime) + 5;
+    let adjustedTime = 5 * video.playbackRate;
+    currentPlayTime = Math.round(video.currentTime + adjustedTime);
     video.currentTime = currentPlayTime;
     slider.value = currentPlayTime;
 
@@ -194,7 +212,8 @@ const backward = function () {
         return;
     }
 
-    currentPlayTime = Math.round(video.currentTime) - 5;
+    let adjustedTime = 5 * video.playbackRate;
+    currentPlayTime = Math.round(video.currentTime - adjustedTime);
     video.currentTime = currentPlayTime;
     slider.value = currentPlayTime;
 
@@ -218,6 +237,7 @@ const stopHandler = () => {
         isPlaying = false;
         setPlayPause();
         // remove the video from UI 
+        video.src = '';  
         video.remove();
         // reset all the variables
         video = null; 
@@ -234,17 +254,21 @@ stopBtn.addEventListener("click", stopHandler)
 const playPauseContainer = document.querySelector("#playPause");
 function setPlayPause() {
     if (isPlaying === true) {
-        if (Math.round(video.currentTime) == duration) {
-            slider.value = 0;
-            currentTimeElem.innerText = "00:00:00";
+        if (Math.round(video.currentTime) == duration) { 
             video.currentTime = 0;
+            slider.value = 0;
+            currentTimeElem.innerText = "00:00:00"; 
         }
         playPauseContainer.innerHTML = `<i class="fas fa-pause"></i>`;
         video.play();
+        if (metadataLoaded) {
+            startTimer();  
+        }
     }
     else {
         playPauseContainer.innerHTML = `<i class="fas fa-play"></i>`;
         video.pause();
+        stopTimer();
     }
 }
 
@@ -260,11 +284,11 @@ playPauseContainer.addEventListener("click", function () {
 /*************** utility function to convert secs into hrs :mns : seconds *****************/
 function timeFormat(timeCount) {
     let time = '';
-    // const sec = parseInt(timeCount, 10);
     const sec = timeCount;
     let hours = Math.floor(sec / 3600);
     let minutes = Math.floor((sec - (hours * 3600)) / 60);
     let seconds = sec - (hours * 3600) - (minutes * 60);
+    
     if (hours < 10)
         hours = "0" + hours;
     if (minutes < 10)
@@ -277,8 +301,12 @@ function timeFormat(timeCount) {
 
 // function that runs the slider and timer 
 function startTimer() {
+    if (timerObj) {
+        clearInterval(timerObj); 
+    }
+
     timerObj = setInterval(function () {
-        currentPlayTime = Math.round(video.currentTime); //when video plays, currentTime updates automatically
+        currentPlayTime = Math.round(video.currentTime); 
         slider.value = currentPlayTime;
         const time = timeFormat(currentPlayTime);
         currentTimeElem.innerText = time;
@@ -286,12 +314,14 @@ function startTimer() {
         if (currentPlayTime == duration) {
             isPlaying = false;
             setPlayPause();
+            stopTimer();
         }
-    }, 1000);
+    }, 300);
 }
 
 function stopTimer() {
     clearInterval(timerObj);
+    timerObj = null; 
 }
 
 /********************** enable drag and drop **********************/
@@ -308,7 +338,7 @@ videoPlayer.addEventListener('dragleave', (e) => {
     e.preventDefault();
 })
 
-videoPlayer.addEventListener('drop', (e) => {
+videoPlayer.addEventListener('drop', (e) => {  
     e.preventDefault();
     acceptInputHandler(e);
 })
@@ -331,11 +361,11 @@ body.addEventListener("keydown", function (e) {
         volumeDownHandler();
     }
     else if ((e.metaKey || e.ctrlKey) && e.key === '=') {
-        e.preventDefault(); // Prevent default browser action for this key combination
+        e.preventDefault(); 
         speedUpHandler(); 
     }
     else if ((e.metaKey || e.ctrlKey) && e.key === "-") {
-        e.preventDefault(); // Prevent default browser action for this key combination
+        e.preventDefault(); 
         speedDownHandler();
     }
     else if (e.key == "ArrowRight") {

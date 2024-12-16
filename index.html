@@ -27,13 +27,13 @@
         <div class="menu-bar">
             <!-- open -->
             <div class="menu">
-                <div class="menu-btn" id="videoBtn">Open</div>
+                <div class="menu-btn" id="videoBtn" title="">Open</div>
                 <input type="file" id="video-input" accept="video/*">
             </div>
 
             <!-- speed -->
             <div class="menu">
-                <div class="menu-btn">Playback</div>
+                <div class="menu-btn" title="">Playback</div>
                 <ul class="menu-items">
                     <li id="speedUp">Speed Up</li>
                     <li id="speedDown">Speed Down</li>
@@ -42,7 +42,7 @@
 
             <!-- volume -->
             <div class="menu">
-                <div class="menu-btn">Audio</div>
+                <div class="menu-btn" title="">Audio</div>
                 <ul class="menu-items">
                     <li id="volumeUp">Volume Up</li>
                     <li id="volumeDown">Volume Down</li>
@@ -60,9 +60,7 @@
 
         <div class="time-container">
             <div class="current-time" id="currentTime">--/--/--</div>
-            <div class="time-slider">
-                <input type="range" value="0" min="0" class="slider" id="slider">
-            </div>
+            <input type="range" value="0" min="0" class="slider" id="slider">
             <div class="total-time" id="totalTime">--/--/--</div>
         </div>
 
