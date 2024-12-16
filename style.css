@@ -159,6 +159,25 @@ i {
     color: black;
 }
 
+/* Disable hover on touch devices */
+@media (hover: none) {
+    .btn:hover {
+        background-color: transparent;
+        border: none;
+    }
+    .input-menu:hover {
+        background-color: transparent;
+        border: none;
+    }
+}
+
+@media (orientation: landscape) {
+    .video {
+        /* width: 100%;  Ensure full width in landscape */
+        height: 100%; /* Adjust height to maintain aspect ratio */
+    }
+}
+
 /* For mobile devices */
 @media (max-width: 56.25em), (max-height: 37.5em){
     .video { 
@@ -183,10 +202,12 @@ i {
 
     .toast {
         font-size: 1rem;
+        top: 95px;
+        right:25px;
     }
 
     .menu-container {
-        gap: 1rem;
+        gap: 1.5rem;
     }
     
     .btn {
@@ -195,7 +216,7 @@ i {
     }
     
     i {
-        font-size: 12px;
+        font-size: 14px;
     }
 
 }
