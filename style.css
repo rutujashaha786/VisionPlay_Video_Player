@@ -78,7 +78,7 @@ li:hover {
 
 main {
     background-color: black;
-    height: calc(100vh - 11rem);
+    height: calc(var(--vh, 1vh) * 100 - 11rem); /* Use dynamic vh */
     display: flex;
     justify-content: center;
     align-items: center;
