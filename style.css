@@ -167,6 +167,10 @@ i {
     .time-container {
         gap: 0.1rem; 
     }
+
+    .thumbnail {
+        height: 10%;
+    }
     
     .current-time,
     .total-time {
@@ -175,14 +179,25 @@ i {
     
     .slider {
         width: calc(100vw - 147px);
-        padding: 0.1rem;
-        cursor: pointer;
-        /* background-color: blue; */
     }
 
     .toast {
         font-size: 1rem;
     }
+
+    .menu-container {
+        gap: 1rem;
+    }
+    
+    .btn {
+        height: 25px;
+        width: 25px;
+    }
+    
+    i {
+        font-size: 12px;
+    }
+
 }
 
 
