@@ -377,15 +377,3 @@ body.addEventListener("keydown", function (e) {
         backward();
     }
 })
-
-(function() {
-    function setVh() {
-        // Calculate the real viewport height
-        const vh = window.innerHeight * 0.01; // 1% of the window height
-        // Set the custom --vh property to be used in CSS
-        document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-
-    window.addEventListener('resize', setVh); // Update when window resizes (important for orientation changes)
-    setVh(); // Initial calculation
-})();
