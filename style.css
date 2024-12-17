@@ -90,7 +90,9 @@ main {
 
 /* For uploaded video */
 .video { 
-    height: 100%;
+    width: 100%; /* Default for portrait mode */
+    height: 100%; /* Adjusted in landscape mode */
+    object-fit: contain; /* Preserve aspect ratio without cropping */
 }
 
 .toast {
@@ -171,18 +173,18 @@ i {
     }
 }
 
-@media (orientation: landscape) {
-    .video {
+/* @media (orientation: landscape) { */
+    /* .video { */
         /* width: 100%;  Ensure full width in landscape */
-        height: 100%; /* Adjust height to maintain aspect ratio */
-    }
-}
+        /* height: 100%; Adjust height to maintain aspect ratio */
+    /* } */
+/* } */
 
 /* For mobile devices */
 @media (max-width: 56.25em), (max-height: 37.5em){
-    .video { 
+    /* .video { 
         width: 100%;
-    }
+    } */
     .time-container {
         gap: 0.1rem; 
     }
