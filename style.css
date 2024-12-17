@@ -221,13 +221,14 @@ i {
 
     footer {
         height: 9rem;
-        position: fixed; /* Or sticky if preferred */
+        position: sticky; /* Or sticky if preferred */
         bottom: 0;
         z-index: 10;
     }
 
     main {
         height: calc(100vh - 14rem);
+        padding-bottom: 50px;
     }
 
 }
