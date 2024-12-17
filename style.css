@@ -234,6 +234,10 @@ i {
         height: 3.5rem; 
     }
 
+    footer{
+        padding-top: 0.4rem;
+    }
+
     main {
         height: calc(var(--viewport-height, 100vh) - 8rem);
     }
