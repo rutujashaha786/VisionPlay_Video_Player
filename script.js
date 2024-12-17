@@ -6,6 +6,15 @@ let currentPlayTime;
 let duration;
 let timerObj;
 
+function adjustViewportHeight() {
+    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    document.documentElement.style.setProperty('--viewport-height', `${viewportHeight}px`);
+}
+
+// Update on load and resize
+window.visualViewport?.addEventListener('resize', adjustViewportHeight);
+window.addEventListener('load', adjustViewportHeight);
+
 
 /******************* Handle Input *******************/
 const videoInput = document.querySelector("#video-input");

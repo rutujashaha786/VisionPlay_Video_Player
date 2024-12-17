@@ -78,7 +78,7 @@ li:hover {
 
 main {
     background-color: black;
-    height: calc(100vh - 11rem);
+    height: calc(var(--viewport-height, 100vh) - 11rem);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -219,17 +219,7 @@ i {
         font-size: 14px;
     }
 
-    footer {
-        height: 9rem;
-        position: sticky; /* Or sticky if preferred */
-        bottom: 0;
-        z-index: 10;
-    }
 
-    main {
-        height: calc(100vh - 14rem);
-        padding-bottom: 50px;
-    }
 
 }
 
