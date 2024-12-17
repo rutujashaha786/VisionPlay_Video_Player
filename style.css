@@ -24,6 +24,7 @@ header {
 
 .title-img {
     height: 60%;
+    object-fit: cover;
 }
 
 .menu-bar {
@@ -74,6 +75,10 @@ li {
 li:hover {
     background-color: darkgray;
     cursor: pointer;
+}
+
+.menu, li {
+    transition: background-color 0.3s ease;
 }
 
 main {
@@ -170,7 +175,6 @@ i {
     .btn.tapped {
         border: 2px solid rgb(7, 93, 133);
         border-radius: 50%;
-        cursor: pointer;
     }
     .input-menu:hover {
         background-color: transparent;
