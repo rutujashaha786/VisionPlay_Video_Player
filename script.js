@@ -40,6 +40,20 @@ btns.forEach(function(btn) {
 const videoInput = document.querySelector("#video-input");
 const videoBtn = document.querySelector("#videoBtn");
 
+videoBtn.addEventListener('click', function() {
+    // Remove 'tapped' class from all buttons first
+    videoBtn.classList.remove('tapped');
+    
+    // Add 'tapped' class to the clicked button
+    videoBtn.classList.add('tapped');
+    
+    // Remove the 'tapped' class after a delay to simulate a temporary effect
+    setTimeout(function() {
+        videoBtn.classList.remove('tapped');
+    }, 500); 
+});
+
+
 const handleInput = function () {
     videoInput.click();
     videoInput.value = ''; 
