@@ -118,21 +118,7 @@ const acceptInputHandler = function (eventObj) {
         currentTimeElem.innerText = "00:00:00";
         slider.setAttribute("max", duration);
         startTimer();
-    })
-
-    videoElement.addEventListener('play', function() {
-        lockOrientation();  // Lock the orientation to portrait when the video plays
-    });
-    
-    videoElement.addEventListener('pause', function() {
-        unlockOrientation();  // Unlock the orientation when the video is paused
-    });
-    
-    videoElement.addEventListener('ended', function() {
-        unlockOrientation();  // Unlock the orientation when the video ends
-    });
-
-    
+    })    
 }
 
 videoInput.addEventListener("change", acceptInputHandler); 
@@ -417,21 +403,4 @@ body.addEventListener("keydown", function (e) {
         backward();
     }
 })
-
-
-function lockOrientation() {
-    if (screen.orientation && screen.orientation.lock) {
-        // Lock the orientation to portrait when video is playing
-        screen.orientation.lock('portrait').catch((error) => {
-            console.log("Error locking to portrait:", error);
-        });
-    }
-}
-
-function unlockOrientation() {
-    if (screen.orientation && screen.orientation.unlock) {
-        // Unlock the orientation to allow free rotation when video is paused or stopped
-        screen.orientation.unlock();
-    }
-}
 
