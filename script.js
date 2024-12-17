@@ -16,6 +16,26 @@ window.visualViewport?.addEventListener('resize', adjustViewportHeight);
 window.addEventListener('load', adjustViewportHeight);
 
 
+const btns = document.querySelectorAll(".btn");
+
+// Add event listener for each button
+btns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        // Remove 'tapped' class from all buttons first
+        btns.forEach(function(innerBtn) {
+            innerBtn.classList.remove('tapped');
+        });
+
+        // Add 'tapped' class to the clicked button
+        btn.classList.add('tapped');
+        
+        // Remove the 'tapped' class after a delay to simulate a temporary effect
+        setTimeout(function() {
+            btn.classList.remove('tapped');
+        }, 500); 
+    });
+});
+
 /******************* Handle Input *******************/
 const videoInput = document.querySelector("#video-input");
 const videoBtn = document.querySelector("#videoBtn");

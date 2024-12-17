@@ -167,24 +167,20 @@ i {
         background-color: transparent;
         border: none;
     }
+    .btn.tapped {
+        border: 2px solid rgb(7, 93, 133);
+        border-radius: 50%;
+        cursor: pointer;
+    }
     .input-menu:hover {
         background-color: transparent;
         border: none;
     }
 }
 
-/* @media (orientation: landscape) { */
-    /* .video { */
-        /* width: 100%;  Ensure full width in landscape */
-        /* height: 100%; Adjust height to maintain aspect ratio */
-    /* } */
-/* } */
-
 /* For mobile devices */
 @media (max-width: 56.25em), (max-height: 37.5em){
-    /* .video { 
-        width: 100%;
-    } */
+
     .time-container {
         gap: 0.1rem; 
     }
@@ -216,7 +212,7 @@ i {
         height: 25px;
         width: 25px;
     }
-    
+
     i {
         font-size: 14px;
     }
