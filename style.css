@@ -91,8 +91,8 @@ main {
 /* For uploaded video */
 .video { 
     width: 100%; /* Default for portrait mode */
-    height: 100%; /* Adjusted in landscape mode */
-    object-fit: contain; /* Preserve aspect ratio without cropping */
+    height: 100vh; /* Adjusted in landscape mode */
+    object-fit: cover; /* Preserve aspect ratio without cropping */
 }
 
 .toast {
