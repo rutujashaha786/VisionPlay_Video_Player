@@ -180,24 +180,7 @@ volumeUp.addEventListener("click", volumeUpHandler);
 volumeDown.addEventListener("click", volumeDownHandler);
 
 /*********** controls ****************************************/
-const fullscreenBtn = document.querySelector("#fullscreenBtn");
 const slider = document.querySelector("#slider");
-
-const fullscreenHandler = function () {
-    const videoElement = document.querySelector("video");
-    if (videoElement == null) {
-        return;
-    }
-    if (videoElement.requestFullscreen) {
-        videoElement.requestFullscreen(); 
-    } else if (videoElement.webkitRequestFullscreen) { 
-        videoElement.webkitRequestFullscreen();
-    } else {
-        showToast("Fullscreen is not supported on your browser.");
-    }
-}
-
-fullscreenBtn.addEventListener("click", fullscreenHandler);
 
 slider.addEventListener("input", function (e) {
     const videoElement = document.querySelector("video");
