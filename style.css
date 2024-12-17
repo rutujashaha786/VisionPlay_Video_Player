@@ -219,6 +219,12 @@ i {
         font-size: 14px;
     }
 
+    footer {
+        position: fixed; /* Or sticky if preferred */
+        bottom: 0;
+        z-index: 10;
+    }
+
 }
 
 
