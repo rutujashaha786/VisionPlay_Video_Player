@@ -231,16 +231,11 @@ i {
 
 @media (max-width: 62.5em) and (max-height: 37.5em) and (orientation: landscape) {
     header, footer {
-        height: 3.5rem; /* Adjust height for header/footer if needed */
+        height: 3.5rem; 
     }
 
     main {
-        height: calc(100vh - 8rem); /* Adjust for new header/footer height */
-    }
-
-    /* Adjust video sizing if needed */
-    .video {
-        height: 60vh; /* Allow more space for video in landscape mode */
+        height: calc(var(--viewport-height, 100vh) - 8rem);
     }
 
     .menu-container {
