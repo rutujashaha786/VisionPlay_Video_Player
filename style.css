@@ -195,11 +195,11 @@ i {
     
     .current-time,
     .total-time {
-        font-size : 0.9rem;
+        font-size : 0.8rem;
     }
     
     .slider {
-        width: calc(100vw - 147px);
+        width: calc(100vw - 140px);
     }
 
     .toast {
@@ -220,8 +220,6 @@ i {
     i {
         font-size: 14px;
     }
-
-
 
 }
 
