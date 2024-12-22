@@ -6,53 +6,9 @@ let currentPlayTime;
 let duration;
 let timerObj;
 
-function adjustViewportHeight() {
-    const viewportHeight = window.visualViewport?.height || window.innerHeight;
-    document.documentElement.style.setProperty('--viewport-height', `${viewportHeight}px`);
-}
-
-// Update on load and resize
-window.visualViewport?.addEventListener('resize', adjustViewportHeight);
-window.addEventListener('load', adjustViewportHeight);
-
-
-const btns = document.querySelectorAll(".btn");
-
-// Add event listener for each button
-btns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        // Remove 'tapped' class from all buttons first
-        btns.forEach(function(innerBtn) {
-            innerBtn.classList.remove('tapped');
-        });
-
-        // Add 'tapped' class to the clicked button
-        btn.classList.add('tapped');
-        
-        // Remove the 'tapped' class after a delay to simulate a temporary effect
-        setTimeout(function() {
-            btn.classList.remove('tapped');
-        }, 500); 
-    });
-});
-
 /******************* Handle Input *******************/
 const videoInput = document.querySelector("#video-input");
 const videoBtn = document.querySelector("#videoBtn");
-
-videoBtn.addEventListener('click', function() {
-    // Remove 'tapped' class from all buttons first
-    videoBtn.classList.remove('tapped');
-    
-    // Add 'tapped' class to the clicked button
-    videoBtn.classList.add('tapped');
-    
-    // Remove the 'tapped' class after a delay to simulate a temporary effect
-    setTimeout(function() {
-        videoBtn.classList.remove('tapped');
-    }, 500); 
-});
-
 
 const handleInput = function () {
     videoInput.click();
@@ -118,7 +74,7 @@ const acceptInputHandler = function (eventObj) {
         currentTimeElem.innerText = "00:00:00";
         slider.setAttribute("max", duration);
         startTimer();
-    })    
+    })
 }
 
 videoInput.addEventListener("change", acceptInputHandler); 
@@ -148,7 +104,7 @@ const speedDownHandler = function () {
     if (videoElement == null) {
         return;
     }
-    if (videoElement.playbackRate < 0.5) {
+    if (videoElement.playbackRate < 1) {
         return;
     }
     videoElement.playbackRate = videoElement.playbackRate - 0.5;
@@ -259,7 +215,6 @@ backwardBtn.addEventListener("click", backward);
 const stopBtn = document.querySelector("#stopBtn");
 const stopHandler = () => {
     if (video) {
-        stopTimer();
         isPlaying = false;
         setPlayPause();
         // remove the video from UI 
@@ -280,7 +235,7 @@ stopBtn.addEventListener("click", stopHandler)
 const playPauseContainer = document.querySelector("#playPause");
 function setPlayPause() {
     if (isPlaying === true) {
-        if (Math.round(video.currentTime) == duration) { 
+        if (video.currentTime == video.duration) { 
             video.currentTime = 0;
             slider.value = 0;
             currentTimeElem.innerText = "00:00:00"; 
@@ -336,11 +291,9 @@ function startTimer() {
         slider.value = currentPlayTime;
         const time = timeFormat(currentPlayTime);
         currentTimeElem.innerText = time;
-
-        if (currentPlayTime == duration) {
+        if (video.currentTime == video.duration) {
             isPlaying = false;
             setPlayPause();
-            stopTimer();
         }
     }, 300);
 }
@@ -404,3 +357,39 @@ body.addEventListener("keydown", function (e) {
     }
 })
 
+/******************* Mobile devices specific Handling *******************/
+function adjustViewportHeight() {
+    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    document.documentElement.style.setProperty('--viewport-height', `${viewportHeight}px`);
+}
+
+// Update on load and resize
+window.visualViewport?.addEventListener('resize', adjustViewportHeight);
+window.addEventListener('load', adjustViewportHeight);
+
+// Check if the device supports touch
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    const btns = document.querySelectorAll(".btn");
+    const listItems = document.querySelectorAll("li");
+
+    function handleTap(elements) {
+        elements.forEach(function(element) {
+            element.addEventListener('click', function() {
+
+                elements.forEach(function(innerElement) {
+                    innerElement.classList.remove('tapped');
+                });
+
+                element.classList.add('tapped');
+                
+                setTimeout(function() {
+                    element.classList.remove('tapped');
+                }, 500);
+            });
+        });
+    }
+
+    handleTap(btns);
+    handleTap(listItems);
+    handleTap([videoBtn]); 
+}
