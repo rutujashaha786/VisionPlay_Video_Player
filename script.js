@@ -371,6 +371,7 @@ window.addEventListener('load', adjustViewportHeight);
 if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
     const btns = document.querySelectorAll(".btn");
     const listItems = document.querySelectorAll("li");
+    const inputMenu = document.querySelector(".input-menu");
 
     function handleTap(elements) {
         elements.forEach(function(element) {
@@ -391,5 +392,5 @@ if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
 
     handleTap(btns);
     handleTap(listItems);
-    handleTap([videoBtn]); 
+    handleTap([inputMenu]);   
 }

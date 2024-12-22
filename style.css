@@ -53,7 +53,7 @@ header {
     padding: 0.2rem 0.2rem;
 }
 
-.menu:hover {
+.menu:hover, .input-menu:hover {
     background-color: var(--hover-bg-color);
     border: 1px solid var(--hover-border-color);
     cursor: pointer;
@@ -84,7 +84,7 @@ li:hover {
     cursor: pointer;
 }
 
-.menu, li {
+.menu, .input-menu, li {
     transition: background-color 0.3s ease;
 }
 
@@ -186,7 +186,7 @@ i {
         background-color: transparent;
         border: none;
     }
-    #videoBtn.tapped {
+    .input-menu.tapped {
         background-color: var(--hover-bg-color);
         border: 1px solid var(--hover-border-color);
         border-radius: 5px;
