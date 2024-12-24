@@ -130,6 +130,12 @@ const volumeUpHandler = function () {
     if (videoElement == null) {
         return;
     }
+
+    if(videoElement.muted){
+        videoElement.muted = false;
+        videoElement.volume = 0.3;
+    }
+    
     if (videoElement.volume > 0.9) {
         return;
     }
