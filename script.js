@@ -17,26 +17,6 @@ const handleInput = function () {
 
 videoBtn.addEventListener("click", handleInput);
 
-// Function to check if the device is iOS
-function isIOS() {
-    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-}
-
-// Adjust the file input behavior based on device type
-function adjustFileInputForIOS() {
-
-    if (isIOS()) {
-        // Remove the 'capture' attribute to disable the camera (Take Video)
-        videoInput.removeAttribute('capture');
-    } 
-}
-
-// Run the adjustment when the page loads
-window.addEventListener('DOMContentLoaded', (event) => {
-    adjustFileInputForIOS();
-});
-
-
 /******************* Accept Input *******************/
 const videoPlayer = document.querySelector("#video-player");
 const totalTimeElem = document.querySelector("#totalTime");
@@ -87,13 +67,14 @@ const acceptInputHandler = function (eventObj) {
     video = videoElement;
 
     console.log(navigator.userAgent);
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && !/Mac/.test(navigator.userAgent)) {
+    const userAgentCheck = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    if (userAgentCheck && !window.MSStream && !/Mac/.test(navigator.userAgent)) {
         // Your iOS-specific logic here
         videoElement.muted = true; // Mute the video initially
         isPlaying = false;
     }
     else{
-        isPlaying = false;
+        isPlaying = true;
     }
 
     setPlayPause();
