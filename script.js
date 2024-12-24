@@ -268,12 +268,7 @@ function setPlayPause() {
             currentTimeElem.innerText = "00:00:00"; 
         }
         playPauseContainer.innerHTML = `<i class="fas fa-pause"></i>`;
-        // video.play();
-
-        video.addEventListener('loadeddata', function() {
-            video.play();
-        });
-
+        video.play();
         if (metadataLoaded) {
             startTimer();  
         }
