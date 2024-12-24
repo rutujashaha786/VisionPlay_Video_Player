@@ -69,10 +69,12 @@ const acceptInputHandler = function (eventObj) {
     const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
     if (userAgentCheck) {
         // Your iOS-specific logic here
-        videoElement.muted = true;
+        isPlaying = false;
+    }
+    else{
+        isPlaying = true;
     }
 
-    isPlaying = true;
     setPlayPause();
     videoElement.volume = 0.3;
     slider.value = 0;
@@ -130,12 +132,6 @@ const volumeUpHandler = function () {
     if (videoElement == null) {
         return;
     }
-
-    if(videoElement.muted){
-        videoElement.muted = false;
-        videoElement.volume = 0.3;
-    }
-    
     if (videoElement.volume > 0.9) {
         return;
     }
