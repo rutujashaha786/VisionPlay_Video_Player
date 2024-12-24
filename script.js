@@ -67,6 +67,7 @@ const acceptInputHandler = function (eventObj) {
 
     video = videoElement;
 
+    console.log(navigator.userAgent);
     if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && !/Mac/.test(navigator.userAgent)) {
         // Your iOS-specific logic here
         isPlaying = false;
