@@ -69,7 +69,10 @@ const acceptInputHandler = function (eventObj) {
     const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
     if (userAgentCheck) {
         // Your iOS-specific logic here
-        isPlaying = false;
+        // isPlaying = false;
+        videoElement.controls = true;
+        showToast("Fallback to native player on iOS.", 3000);
+        return;
     }
     else{
         isPlaying = true;
