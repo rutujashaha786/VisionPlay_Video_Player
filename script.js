@@ -71,7 +71,6 @@ const acceptInputHandler = function (eventObj) {
     if (userAgentCheck) {
         // Your iOS-specific logic here
         videoElement.muted = false; 
-        videoElement.poster = 'click_play.jpg';
         isPlaying = false;
     }
     else{
