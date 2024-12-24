@@ -54,8 +54,8 @@ const acceptInputHandler = function (eventObj) {
     const videoElement = document.createElement("video");
     videoElement.src = link;
     videoElement.setAttribute("class", "video");
-    videoElement.setAttribute('playsinline', ''); // Prevent full-screen on iOS
-    videoElement.setAttribute('webkit-playsinline', '');
+    // videoElement.setAttribute('playsinline', ''); // Prevent full-screen on iOS
+    // videoElement.setAttribute('webkit-playsinline', '');
     videoElement.preload = "auto";
 
     if (videoPlayer.children.length > 0) {
@@ -70,8 +70,9 @@ const acceptInputHandler = function (eventObj) {
     if (userAgentCheck) {
         // Your iOS-specific logic here
         // isPlaying = false;
-        videoElement.controls = true;
-        showToast("Fallback to native player on iOS.", 3000);
+        // videoElement.controls = true;
+        stopHandler();
+        showToast("Opening video in native viewer for iOS.", 3000);
         return;
     }
     else{
