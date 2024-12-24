@@ -72,7 +72,7 @@ const acceptInputHandler = function (eventObj) {
         let time = timeFormat(duration);
         totalTimeElem.innerText = time;
         currentTimeElem.innerText = "00:00:00";
-        slider.setAttribute("max", duration);
+        slider.setAttribute("max", Math.floor(videoElement.duration * 100));
         startTimer();
     })
 }
@@ -159,9 +159,9 @@ slider.addEventListener("input", function (e) {
         return;
     }
 
-    let value = e.target.value;
+    let value = e.target.value / 100; 
     video.currentTime = value;
-    currentTimeElem.innerText = timeFormat(value);
+    currentTimeElem.innerText = timeFormat(Math.round(value));
 });
 
 /*********** forward and backward button *************/
@@ -176,14 +176,19 @@ const forward = function () {
 
     let adjustedTime = 5 * video.playbackRate;
     currentPlayTime = Math.round(video.currentTime + adjustedTime);
-    video.currentTime = currentPlayTime;
-    slider.value = currentPlayTime;
 
-    if (currentPlayTime > duration) {
+    if (Math.abs(currentPlayTime - video.duration) < 0.5) {
+        currentPlayTime = video.duration; 
+    }
+
+    video.currentTime = currentPlayTime;
+    slider.value = Math.floor(currentPlayTime * 100);
+
+    if (currentPlayTime > video.duration) {
         currentTimeElem.innerText = timeFormat(duration);
     }
     else {
-        currentTimeElem.innerText = timeFormat(currentPlayTime);
+        currentTimeElem.innerText = timeFormat(Math.round(currentPlayTime));
     }
     showToast("Forward by 5 sec");
 }
@@ -196,14 +201,19 @@ const backward = function () {
 
     let adjustedTime = 5 * video.playbackRate;
     currentPlayTime = Math.round(video.currentTime - adjustedTime);
+
+    if (currentPlayTime < 0.5) {
+        currentPlayTime = 0; 
+    }
+
     video.currentTime = currentPlayTime;
-    slider.value = currentPlayTime;
+    slider.value = Math.floor(currentPlayTime * 100);
 
     if (currentPlayTime < 0) {
         currentTimeElem.innerText = timeFormat(0);
     }
     else {
-        currentTimeElem.innerText = timeFormat(currentPlayTime);
+        currentTimeElem.innerText = timeFormat(Math.round(currentPlayTime));
     }
     showToast("Backward by 5 sec");  
 }
@@ -235,7 +245,7 @@ stopBtn.addEventListener("click", stopHandler)
 const playPauseContainer = document.querySelector("#playPause");
 function setPlayPause() {
     if (isPlaying === true) {
-        if (video.currentTime == video.duration) { 
+        if (Math.abs(video.currentTime - video.duration) < 0.01) { 
             video.currentTime = 0;
             slider.value = 0;
             currentTimeElem.innerText = "00:00:00"; 
@@ -288,14 +298,14 @@ function startTimer() {
 
     timerObj = setInterval(function () {
         currentPlayTime = Math.round(video.currentTime); 
-        slider.value = currentPlayTime;
+        slider.value = Math.floor(video.currentTime * 100);
         const time = timeFormat(currentPlayTime);
         currentTimeElem.innerText = time;
         if (video.currentTime == video.duration) {
             isPlaying = false;
             setPlayPause();
         }
-    }, 300);
+    }, 30);
 }
 
 function stopTimer() {
