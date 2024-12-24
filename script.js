@@ -66,15 +66,14 @@ const acceptInputHandler = function (eventObj) {
 
     video = videoElement;
 
-    console.log(navigator.userAgent);
     const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
     if (userAgentCheck) {
         // Your iOS-specific logic here
         videoElement.muted = true;
-        isPlaying = true;
+        isPlaying = false; 
     }
     else{
-        isPlaying = false;
+        isPlaying = true; 
     }
 
     setPlayPause();
