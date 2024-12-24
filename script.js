@@ -72,10 +72,8 @@ const acceptInputHandler = function (eventObj) {
         videoElement.muted = true;
     }
 
-
     isPlaying = true;
     setPlayPause();
-    videoElement.muted = false; 
     videoElement.volume = 0.3;
     slider.value = 0;
 
