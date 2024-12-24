@@ -17,6 +17,25 @@ const handleInput = function () {
 
 videoBtn.addEventListener("click", handleInput);
 
+// Function to check if the device is iOS
+function isIOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+}
+
+// Adjust the file input behavior based on device type
+function adjustFileInputForIOS() {
+
+    if (isIOS()) {
+        // Remove the 'capture' attribute to disable the camera (Take Video)
+        videoInput.removeAttribute('capture');
+    } 
+}
+
+// Run the adjustment when the page loads
+window.addEventListener('DOMContentLoaded', (event) => {
+    adjustFileInputForIOS();
+});
+
 
 /******************* Accept Input *******************/
 const videoPlayer = document.querySelector("#video-player");
