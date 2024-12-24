@@ -57,7 +57,7 @@ const acceptInputHandler = function (eventObj) {
     videoElement.setAttribute("class", "video");
     videoElement.setAttribute('playsinline', ''); // Prevent full-screen on iOS
     videoElement.setAttribute('webkit-playsinline', '');
-    videoElement.preload = "metadata";
+    videoElement.preload = "auto";
 
     if (videoPlayer.children.length > 0) {
         videoPlayer.removeChild(videoPlayer.children[0]);
@@ -66,7 +66,15 @@ const acceptInputHandler = function (eventObj) {
     videoPlayer.appendChild(videoElement);
 
     video = videoElement;
-    isPlaying = true;
+
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && !/Mac/.test(navigator.userAgent)) {
+        // Your iOS-specific logic here
+        isPlaying = false;
+    }
+    else{
+        isPlaying = true;
+    }
+
     setPlayPause();
     videoElement.volume = 0.3;
     slider.value = 0;
@@ -78,7 +86,10 @@ const acceptInputHandler = function (eventObj) {
         totalTimeElem.innerText = time;
         currentTimeElem.innerText = "00:00:00";
         slider.setAttribute("max", Math.floor(videoElement.duration * 100));
-        startTimer();
+        if(isPlaying){
+            startTimer();
+        }
+        
     })
 }
 
