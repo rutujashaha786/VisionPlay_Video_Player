@@ -55,6 +55,8 @@ const acceptInputHandler = function (eventObj) {
     const videoElement = document.createElement("video");
     videoElement.src = link;
     videoElement.setAttribute("class", "video");
+    videoElement.setAttribute('playsinline', ''); // Prevent full-screen on iOS
+    videoElement.setAttribute('webkit-playsinline', '');
 
     if (videoPlayer.children.length > 0) {
         videoPlayer.removeChild(videoPlayer.children[0]);
