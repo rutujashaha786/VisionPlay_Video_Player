@@ -70,13 +70,12 @@ const acceptInputHandler = function (eventObj) {
     if (userAgentCheck) {
         // Your iOS-specific logic here
         videoElement.muted = true;
-        isPlaying = false; 
-    }
-    else{
-        isPlaying = true; 
     }
 
+
+    isPlaying = true;
     setPlayPause();
+    videoElement.muted = false; 
     videoElement.volume = 0.3;
     slider.value = 0;
 
