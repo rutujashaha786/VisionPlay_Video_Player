@@ -67,7 +67,7 @@ const acceptInputHandler = function (eventObj) {
     video = videoElement;
 
     console.log(navigator.userAgent);
-    const userAgentCheck = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
     if (userAgentCheck && !window.MSStream && !/Mac/.test(navigator.userAgent)) {
         // Your iOS-specific logic here
         videoElement.muted = true; // Mute the video initially
