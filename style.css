@@ -173,7 +173,7 @@ i {
 }
 
 /* Disable hover on touch devices */
-@media (hover: none) {
+@media (pointer: coarse), (hover: none) {
     .btn:hover {
         background-color: transparent;
         border: none;

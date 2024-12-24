@@ -24,6 +24,8 @@ const totalTimeElem = document.querySelector("#totalTime");
 const currentTimeElem = document.querySelector("#currentTime");
 
 const acceptInputHandler = function (eventObj) {
+    eventObj.preventDefault();
+    eventObj.stopPropagation();
 
     let selectedFileObject;
     metadataLoaded = false;
@@ -378,7 +380,7 @@ window.visualViewport?.addEventListener('resize', adjustViewportHeight);
 window.addEventListener('load', adjustViewportHeight);
 
 // Check if the device supports touch
-if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches) {
     const btns = document.querySelectorAll(".btn");
     const listItems = document.querySelectorAll("li");
     const inputMenu = document.querySelector(".input-menu");
