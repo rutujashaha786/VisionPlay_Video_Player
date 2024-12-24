@@ -93,7 +93,7 @@ const acceptInputHandler = function (eventObj) {
         isPlaying = false;
     }
     else{
-        isPlaying = true;
+        isPlaying = false;
     }
 
     setPlayPause();
