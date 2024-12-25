@@ -54,8 +54,8 @@ const acceptInputHandler = function (eventObj) {
     const videoElement = document.createElement("video");
     videoElement.src = link;
     videoElement.setAttribute("class", "video");
-    // videoElement.setAttribute('playsinline', ''); // Prevent full-screen on iOS
-    // videoElement.setAttribute('webkit-playsinline', '');
+    videoElement.setAttribute('playsinline', ''); // Prevent full-screen on iOS
+    videoElement.setAttribute('webkit-playsinline', '');
     videoElement.preload = "auto";
 
     if (videoPlayer.children.length > 0) {
@@ -73,9 +73,10 @@ const acceptInputHandler = function (eventObj) {
     // Check for iOS devices (iPad, iPhone, iPod) and touch-enabled devices (including iPad Pro under Macintosh user agent)
     if ((userAgentCheck || navigator.userAgent.includes("Macintosh")) && isTouchDevice) {
         // For iPhone, iPad, iPod, iPad Pro, or other touch-enabled iOS devices
-        isPlaying = true;
+        showToast("Please click on play", 5000);    
+        isPlaying = false;
         // stopHandler();
-        showToast("Unfortunately, this video player does not support iOS. Please use the native video player", 5000);    
+        
     }
     else{
         isPlaying = true;
