@@ -46,6 +46,7 @@ const acceptInputHandler = function (eventObj) {
         selectedFileObject = eventObj.target.files[0];
     }
 
+    console.log("file type", selectedFileObject.type);
     if (!selectedFileObject.type.startsWith('video/')) { 
         stopHandler();
         showToast('Invalid file type. Please select a video file.', 5000);
