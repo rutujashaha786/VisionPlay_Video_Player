@@ -7,12 +7,14 @@ let duration;
 let timerObj;
 
 const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
 const volumeControl = document.querySelector('.ios-exclude');
 
 // Hide volume control for iOS devices
-// if (userAgentCheck) {
-//     volumeControl.style.display = 'none'; // Hide the volume controls for iOS devices
-// } 
+if (userAgentCheck) {
+    volumeControl.style.display = 'none'; // Hide the volume controls for iOS devices
+} 
 
 
 /******************* Handle Input *******************/
@@ -75,14 +77,9 @@ const acceptInputHandler = function (eventObj) {
     video = videoElement;
 
     console.log("navigator.userAgent", navigator.userAgent)
-    const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
 
     // Check for iOS devices (iPad, iPhone, iPod) and touch-enabled devices (including iPad Pro under Macintosh user agent)
     if ((userAgentCheck || navigator.userAgent.includes("Macintosh")) && isTouchDevice) {
-        // For iPhone, iPad, iPod, iPad Pro, or other touch-enabled iOS devices
-        // showToast("Please click on play", 5000);    
-        // videoElement.muted = true;
         console.log("videoElement.muted", videoElement.muted);
         isPlaying = false;
         showToast("Please play the video to use the video player", 5000);        
@@ -289,7 +286,6 @@ function setPlayPause() {
         }
         playPauseContainer.innerHTML = `<i class="fas fa-pause"></i>`;
         video.play();
-        video.volume = 0.3; 
         console.log("videoElement.muted-22", video.muted);
         console.log("volumn-22", video.volume)
         if (metadataLoaded) {
