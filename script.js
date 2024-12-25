@@ -74,7 +74,7 @@ const acceptInputHandler = function (eventObj) {
     if ((userAgentCheck || navigator.userAgent.includes("Macintosh")) && isTouchDevice) {
         // For iPhone, iPad, iPod, iPad Pro, or other touch-enabled iOS devices
         isPlaying = true;
-        stopHandler();
+        // stopHandler();
         showToast("Unfortunately, this video player does not support iOS. Please use the native video player", 5000);    
     }
     else{
