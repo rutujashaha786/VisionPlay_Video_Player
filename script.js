@@ -282,7 +282,7 @@ function setPlayPause() {
         }
         playPauseContainer.innerHTML = `<i class="fas fa-pause"></i>`;
         video.play();
-        console.log("videoElement.muted-22", videoElement.muted);
+        console.log("videoElement.muted-22", video.muted);
         if (metadataLoaded) {
             startTimer();  
         }
@@ -290,7 +290,7 @@ function setPlayPause() {
     else {
         playPauseContainer.innerHTML = `<i class="fas fa-play"></i>`;
         video.pause();
-        console.log("videoElement.muted-33", videoElement.muted);
+        console.log("videoElement.muted-33", video.muted);
         stopTimer();
     }
 }
