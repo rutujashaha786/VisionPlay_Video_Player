@@ -105,6 +105,14 @@ const acceptInputHandler = function (eventObj) {
         }
         
     })
+
+    videoElement.addEventListener('loadeddata', function() {
+        console.log('Video loaded. Current time:', videoElement.currentTime);
+        if (videoElement.currentTime === 0) {
+            // Set the time manually if needed
+            videoElement.currentTime = 1;  // Start from 1 second, for example
+        }
+    });
 }
 
 videoInput.addEventListener("change", acceptInputHandler); 
