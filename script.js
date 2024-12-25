@@ -23,8 +23,8 @@ const totalTimeElem = document.querySelector("#totalTime");
 const currentTimeElem = document.querySelector("#currentTime");
 
 const acceptInputHandler = function (eventObj) {
-    eventObj.preventDefault();
-    eventObj.stopPropagation();
+    // eventObj.preventDefault();
+    // eventObj.stopPropagation();
 
     let selectedFileObject;
     metadataLoaded = false;
@@ -66,14 +66,16 @@ const acceptInputHandler = function (eventObj) {
 
     video = videoElement;
 
+    console.log("navigator.userAgent", navigator.userAgent)
     const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
-    if (userAgentCheck) {
-        // Your iOS-specific logic here
-        // isPlaying = false;
-        // videoElement.controls = true;
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+
+    // Check for iOS devices (iPad, iPhone, iPod) and touch-enabled devices (including iPad Pro under Macintosh user agent)
+    if ((userAgentCheck || navigator.userAgent.includes("Macintosh")) && isTouchDevice) {
+        // For iPhone, iPad, iPod, iPad Pro, or other touch-enabled iOS devices
+        isPlaying = true;
         stopHandler();
-        showToast("Opening video in native viewer for iOS.", 3000);
-        return;
+        showToast("Unfortunately, this video player does not support iOS. Please use the native video player", 5000);    
     }
     else{
         isPlaying = true;
