@@ -56,7 +56,6 @@ const acceptInputHandler = function (eventObj) {
     videoElement.setAttribute("class", "video");
     videoElement.setAttribute('playsinline', ''); // Prevent full-screen on iOS
     videoElement.setAttribute('webkit-playsinline', '');
-    videoElement.preload = "auto";
 
     if (videoPlayer.children.length > 0) {
         videoPlayer.removeChild(videoPlayer.children[0]);
@@ -76,9 +75,8 @@ const acceptInputHandler = function (eventObj) {
         // showToast("Please click on play", 5000);    
         // videoElement.muted = true;
         console.log("videoElement.muted", videoElement.muted);
-        isPlaying = true;
-        // stopHandler();
-        
+        isPlaying = false;
+        showToast("Please play the video to use the video player", 5000);        
     }
     else{
         isPlaying = true;
@@ -158,7 +156,7 @@ const volumeDownHandler = function () {
         return;
     }
     console.log("column-d", videoElement.volume)
-    videoElement.volume = 0.3; 
+    // videoElement.volume = 0.3; 
     console.log("column-d-1", videoElement.volume)
     videoElement.volume = videoElement.volume - 0.1;
     showToast((Math.round(videoElement.volume * 100)) + "%");
