@@ -7,15 +7,25 @@ let duration;
 let timerObj;
 
 const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
-const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
 
-const volumeControl = document.querySelector('.ios-exclude');
+if (userAgentCheck || navigator.userAgent.includes("Macintosh") && isTouchDevice) {
+  document.body.innerHTML = '';
 
-// Hide volume control for iOS devices
-if (userAgentCheck) {
-    volumeControl.style.display = 'none'; // Hide the volume controls for iOS devices
-} 
-
+  const message = document.createElement('div');
+  message.textContent = "This video player is not supported on iOS. Please use a different device.";
+  message.style.position = 'absolute';
+  message.style.top = '50%';
+  message.style.left = '50%';
+  message.style.transform = 'translate(-50%, -50%)';
+  message.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+  message.style.color = '#fff';
+  message.style.padding = '20px';
+  message.style.fontSize = '18px';
+  message.style.textAlign = 'center';
+  
+  document.body.appendChild(message);
+}
 
 /******************* Handle Input *******************/
 const videoInput = document.querySelector("#video-input");
@@ -34,8 +44,6 @@ const totalTimeElem = document.querySelector("#totalTime");
 const currentTimeElem = document.querySelector("#currentTime");
 
 const acceptInputHandler = function (eventObj) {
-    // eventObj.preventDefault();
-    // eventObj.stopPropagation();
 
     let selectedFileObject;
     metadataLoaded = false;
@@ -65,8 +73,6 @@ const acceptInputHandler = function (eventObj) {
     const videoElement = document.createElement("video");
     videoElement.src = link;
     videoElement.setAttribute("class", "video");
-    videoElement.setAttribute('playsinline', ''); // Prevent full-screen on iOS
-    videoElement.setAttribute('webkit-playsinline', '');
 
     if (videoPlayer.children.length > 0) {
         videoPlayer.removeChild(videoPlayer.children[0]);
@@ -74,22 +80,9 @@ const acceptInputHandler = function (eventObj) {
 
     videoPlayer.appendChild(videoElement);
 
-    video = videoElement;
-
-    console.log("navigator.userAgent", navigator.userAgent)
-
-    // Check for iOS devices (iPad, iPhone, iPod) and touch-enabled devices (including iPad Pro under Macintosh user agent)
-    if ((userAgentCheck || navigator.userAgent.includes("Macintosh")) && isTouchDevice) {
-        console.log("videoElement.muted", videoElement.muted);
-        isPlaying = false;
-        showToast("Please play the video to use the video player", 5000);        
-    }
-    else{
-        isPlaying = true;
-    }
-
+    video = videoElement;    
+    isPlaying = true;
     setPlayPause();
-    console.log("videoElement.muted-1", videoElement.muted);
     videoElement.volume = 0.3;
     slider.value = 0;
 
@@ -100,19 +93,8 @@ const acceptInputHandler = function (eventObj) {
         totalTimeElem.innerText = time;
         currentTimeElem.innerText = "00:00:00";
         slider.setAttribute("max", Math.floor(videoElement.duration * 100));
-        if(isPlaying){
-            startTimer();
-        }
-        
+        startTimer();
     })
-
-    videoElement.addEventListener('loadeddata', function() {
-        console.log('Video loaded. Current time:', videoElement.currentTime);
-        if (videoElement.currentTime === 0) {
-            // Set the time manually if needed
-            videoElement.currentTime = 1;  // Start from 1 second, for example
-        }
-    });
 }
 
 videoInput.addEventListener("change", acceptInputHandler); 
@@ -169,9 +151,6 @@ const volumeDownHandler = function () {
     if (videoElement.volume < 0.1) {
         return;
     }
-    console.log("column-d", videoElement.volume)
-    // videoElement.volume = 0.3; 
-    console.log("column-d-1", videoElement.volume)
     videoElement.volume = videoElement.volume - 0.1;
     showToast((Math.round(videoElement.volume * 100)) + "%");
 }
@@ -215,7 +194,6 @@ const forward = function () {
         return;
     }
 
-    console.log("volumn-f", videoElement.volume)
     let adjustedTime = 5 * video.playbackRate;
     currentPlayTime = Math.round(video.currentTime + adjustedTime);
 
@@ -294,8 +272,6 @@ function setPlayPause() {
         }
         playPauseContainer.innerHTML = `<i class="fas fa-pause"></i>`;
         video.play();
-        console.log("videoElement.muted-22", video.muted);
-        console.log("volumn-22", video.volume)
         if (metadataLoaded) {
             startTimer();  
         }
@@ -303,7 +279,6 @@ function setPlayPause() {
     else {
         playPauseContainer.innerHTML = `<i class="fas fa-play"></i>`;
         video.pause();
-        console.log("videoElement.muted-33", video.muted);
         stopTimer();
     }
 }
@@ -340,9 +315,8 @@ function startTimer() {
     if (timerObj) {
         clearInterval(timerObj); 
     }
-    console.log("column-s", video.volume)
+
     timerObj = setInterval(function () {
-        console.log("column-s1", video.volume)
         currentPlayTime = Math.round(video.currentTime); 
         slider.value = Math.floor(video.currentTime * 100);
         const time = timeFormat(currentPlayTime);
@@ -424,7 +398,7 @@ window.visualViewport?.addEventListener('resize', adjustViewportHeight);
 window.addEventListener('load', adjustViewportHeight);
 
 // Check if the device supports touch
-if ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches) {
+if (isTouchDevice) {
     const btns = document.querySelectorAll(".btn");
     const listItems = document.querySelectorAll("li");
     const inputMenu = document.querySelector(".input-menu");
