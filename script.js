@@ -6,6 +6,15 @@ let currentPlayTime;
 let duration;
 let timerObj;
 
+const userAgentCheck = /iPad|iPhone|iPod/i.test(navigator.userAgent);
+const volumeControl = document.querySelector('.ios-exclude');
+
+// Hide volume control for iOS devices
+// if (userAgentCheck) {
+//     volumeControl.style.display = 'none'; // Hide the volume controls for iOS devices
+// } 
+
+
 /******************* Handle Input *******************/
 const videoInput = document.querySelector("#video-input");
 const videoBtn = document.querySelector("#videoBtn");
@@ -280,7 +289,9 @@ function setPlayPause() {
         }
         playPauseContainer.innerHTML = `<i class="fas fa-pause"></i>`;
         video.play();
+        video.volume = 0.3; 
         console.log("videoElement.muted-22", video.muted);
+        console.log("volumn-22", video.volume)
         if (metadataLoaded) {
             startTimer();  
         }
