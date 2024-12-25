@@ -76,7 +76,7 @@ const acceptInputHandler = function (eventObj) {
         // showToast("Please click on play", 5000);    
         // videoElement.muted = true;
         console.log("videoElement.muted", videoElement.muted);
-        isPlaying = false;
+        isPlaying = true;
         // stopHandler();
         
     }
