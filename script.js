@@ -13,17 +13,9 @@ if (userAgentCheck || navigator.userAgent.includes("Macintosh") && isTouchDevice
   document.body.innerHTML = '';
 
   const message = document.createElement('div');
+  message.className = 'empty';
   message.textContent = "This video player is not supported on iOS. Please use a different device.";
-  message.style.position = 'absolute';
-  message.style.top = '50%';
-  message.style.left = '50%';
-  message.style.transform = 'translate(-50%, -50%)';
-  message.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-  message.style.color = '#fff';
-  message.style.padding = '20px';
-  message.style.fontSize = '18px';
-  message.style.textAlign = 'center';
-  
+
   document.body.appendChild(message);
 }
 
