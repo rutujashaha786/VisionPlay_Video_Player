@@ -74,8 +74,9 @@ const acceptInputHandler = function (eventObj) {
     if ((userAgentCheck || navigator.userAgent.includes("Macintosh")) && isTouchDevice) {
         // For iPhone, iPad, iPod, iPad Pro, or other touch-enabled iOS devices
         // showToast("Please click on play", 5000);    
-        videoElement.muted = true;
-        isPlaying = true;
+        // videoElement.muted = true;
+        console.log("videoElement.muted", videoElement.muted);
+        isPlaying = false;
         // stopHandler();
         
     }
@@ -84,6 +85,7 @@ const acceptInputHandler = function (eventObj) {
     }
 
     setPlayPause();
+    console.log("videoElement.muted-1", videoElement.muted);
     videoElement.volume = 0.3;
     slider.value = 0;
 
@@ -155,7 +157,6 @@ const volumeDownHandler = function () {
     if (videoElement.volume < 0.1) {
         return;
     }
-    videoElement.muted = false;
     console.log("column-d", videoElement.volume)
     videoElement.volume = 0.3; 
     console.log("column-d-1", videoElement.volume)
@@ -281,6 +282,7 @@ function setPlayPause() {
         }
         playPauseContainer.innerHTML = `<i class="fas fa-pause"></i>`;
         video.play();
+        console.log("videoElement.muted-22", videoElement.muted);
         if (metadataLoaded) {
             startTimer();  
         }
@@ -288,6 +290,7 @@ function setPlayPause() {
     else {
         playPauseContainer.innerHTML = `<i class="fas fa-play"></i>`;
         video.pause();
+        console.log("videoElement.muted-33", videoElement.muted);
         stopTimer();
     }
 }
