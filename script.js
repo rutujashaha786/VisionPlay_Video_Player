@@ -322,8 +322,9 @@ function startTimer() {
     if (timerObj) {
         clearInterval(timerObj); 
     }
-
+    console.log("column-s", video.volume)
     timerObj = setInterval(function () {
+        console.log("column-s1", video.volume)
         currentPlayTime = Math.round(video.currentTime); 
         slider.value = Math.floor(video.currentTime * 100);
         const time = timeFormat(currentPlayTime);
