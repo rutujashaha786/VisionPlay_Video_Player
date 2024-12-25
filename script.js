@@ -197,6 +197,7 @@ const forward = function () {
         return;
     }
 
+    console.log("volumn", video.volume)
     let adjustedTime = 5 * video.playbackRate;
     currentPlayTime = Math.round(video.currentTime + adjustedTime);
 
