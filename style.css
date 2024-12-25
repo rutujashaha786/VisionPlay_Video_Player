@@ -201,6 +201,9 @@ i {
 
 /* For mobile devices */
 @media (max-width: 56.25em), (max-height: 37.5em){
+    .menu-items {
+        width: 110px;
+    }
     .time-container {
         gap: 0.1rem; 
     }
