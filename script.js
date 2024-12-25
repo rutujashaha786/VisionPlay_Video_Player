@@ -73,8 +73,9 @@ const acceptInputHandler = function (eventObj) {
     // Check for iOS devices (iPad, iPhone, iPod) and touch-enabled devices (including iPad Pro under Macintosh user agent)
     if ((userAgentCheck || navigator.userAgent.includes("Macintosh")) && isTouchDevice) {
         // For iPhone, iPad, iPod, iPad Pro, or other touch-enabled iOS devices
-        showToast("Please click on play", 5000);    
-        isPlaying = false;
+        // showToast("Please click on play", 5000);    
+        video.muted = true;
+        isPlaying = true;
         // stopHandler();
         
     }
@@ -154,6 +155,8 @@ const volumeDownHandler = function () {
     if (videoElement.volume < 0.1) {
         return;
     }
+    video.muted = false;
+    console.log("column-d", video.volume)
     videoElement.volume = videoElement.volume - 0.1;
     showToast((Math.round(videoElement.volume * 100)) + "%");
 }
@@ -197,7 +200,7 @@ const forward = function () {
         return;
     }
 
-    console.log("volumn", video.volume)
+    console.log("volumn-f", video.volume)
     let adjustedTime = 5 * video.playbackRate;
     currentPlayTime = Math.round(video.currentTime + adjustedTime);
 
