@@ -14,7 +14,7 @@ if (userAgentCheck || navigator.userAgent.includes("Macintosh") && isTouchDevice
 
   const message = document.createElement('div');
   message.className = 'empty';
-  message.textContent = "This video player is not supported on iOS. Please use a different device.";
+  message.textContent = "This video player is not supported on iOS devices.";
 
   document.body.appendChild(message);
 }
