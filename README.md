@@ -2,6 +2,9 @@
 
 VisionPlay is a custom-built web video player that allows users to upload videos and control playback using intuitive UI controls such as play/pause, seeking, speed adjustment, and volume control.
 
+## 🔗 Demo
+[🎥 Walkthrough](https://drive.google.com/file/d/1zJNJokT9zk-G-mjBiOsHzW0soSI4sgki/view?usp=sharing ) | [🌐 Live Demo](https://rutujashaha786.github.io/VisionPlay_Video_Player/ )
+
 ## Features
 - **📁 Video Upload:** 
     - Upload videos via file input or drag-and-drop
